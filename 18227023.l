@@ -22,7 +22,7 @@
 "-"				{printf("token: HYPHEN"); return HYPHEN;}
 [xX]+           {printf("token: SIZESTRING"); return SIZESTRING;}
 [0-9]+			{printf("token: NUM"); yyval = atoi(yytext); return NUM; }
-[a-zA-Z]+		{printf("token: IDENTIFIER"); return IDENTIFIER;}
+[a-zA-Z]+[0-9]*["-"]*		{printf("token: IDENTIFIER"); return IDENTIFIER;}
 .;
 %%
 
