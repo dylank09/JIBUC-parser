@@ -7,20 +7,22 @@
 %}
 
 %token BEGINNING BODY END
-%token INPUT PRINT MOVE ADD TO
-%token QUOTE SEMICOLON
+%token INPUT OUTPUT MOVE ADD TO
+%token SEMICOLON PERIOD
 %token NEWLINE WHITESPACE
-%token SIZESTRING NUM IDENTIFIER
-%token<ival> NUM
- 
+%token SIZESTRING IDENTIFIER STRING
+%token<ival> NUMBER
+
 %%
 program: BEGINNING declarations BODY statements END	{printf("This is a correctly formed program!\n");}
 
-declaration:
+declarations: declaration | declaration declarations
 
-statements:
+declaration: SIZESTRING WHITESPACE IDENTIFIER PERIOD NEWLINE
 
-newlines: 
+statements: statement | statement statements
+
+statement: assignment | input | output
 
 assignment: 
 
