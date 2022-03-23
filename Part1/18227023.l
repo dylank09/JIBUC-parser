@@ -4,34 +4,27 @@
 %}
 
 %option noyywrap
+%option caseless
 
 /* Rules */
 %%
-"BEGINNING"		                {printf("token: BEGINNING\n");}
-"beginning"		                {printf("token: BEGINNING\n");}
-"INPUT"                         {printf("token: INPUT\n");}
-"input"                         {printf("token: INPUT\n");}
-"PRINT"                         {printf("token: OUTPUT\n");}
-"print"                         {printf("token: OUTPUT\n");}
-"BODY"                          {printf("token: BODY\n");}
-"body"                          {printf("token: BODY\n");}
-"MOVE"                          {printf("token: MOVE\n");}
-"move"                          {printf("token: MOVE\n");}
-"ADD"                           {printf("token: ADD\n");}
-"add"                           {printf("token: ADD\n");}
-"END"			                {printf("token: END\n");}
-"end"			                {printf("token: END\n");}
-"TO"                            {printf("token: TO\n");}
-"to"                            {printf("token: TO\n");}
-\.                              {printf("token: PERIOD\n");}
-\n				                {printf("token: NEWLINE\n");}
-[\t ]+                          {printf("token: WHITESPACE\n");}
-";"                             {printf("token: SEMICOLON\n");}
-[xX]+                           {printf("token: SIZESTRING length is %d\n", yyleng);}
-[0-9]+			                {printf("token: NUMBER length is %d\n", yyleng);}
-\"([^\\\"]|\\.)*\"              {printf("token: STRING\n");}
-[a-zA-Z][a-zA-Z0-9\-]*	        {printf("token: IDENTIFIER\n");}
-.                               {printf("Not a valid token\n"); return 0;}
+"BEGINNING"		            {printf("token: BEGINNING\n"); /* return BEGINNING */}
+"INPUT"                     {printf("token: INPUT\n"); /* return INPUT */}
+"PRINT"                     {printf("token: OUTPUT\n"); /* return OUTPUT */}
+"BODY"                      {printf("token: BODY\n"); /* return BODY */}
+"MOVE"                      {printf("token: MOVE\n"); /* return MOVE */}
+"ADD"                       {printf("token: ADD\n"); /* return ADD */}
+"END"			            {printf("token: END\n"); /* return END */}
+"TO"                        {printf("token: TO\n"); /* return TO */}
+\.                          {printf("token: PERIOD\n"); /* return PERIOD */}
+\n				            {printf("token: NEWLINE\n"); /* return NEWLINE */}
+[\t ]+                      {printf("token: WHITESPACE\n"); /* return WHITESPACE */}
+";"                         {printf("token: SEMICOLON\n"); /* return SEMICOLON */}
+[X]+                        {printf("token: SIZESTRING length is %d\n", yyleng); /* return SIZESTRING */}
+[-+]?[0-9]+			        {printf("token: INTEGER value is %d\n", atoi(yytext)); /* return INTEGER */}
+\"([^\\\"]|\\.)*\"          {printf("token: STRING\n"); /* return STRING */}
+[a-zA-Z][a-zA-Z0-9\-]*	    {printf("token: IDENTIFIER\n"); /* return IDENTIFIER */}
+.                           {printf("Invalid token\n"); return 0;}
 %%
 
 /* Functions */
