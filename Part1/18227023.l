@@ -16,14 +16,14 @@
 "ADD"                       {printf("token: ADD\n"); /* return ADD; */}
 "END"			            {printf("token: END\n"); /* return END; */}
 "TO"                        {printf("token: TO\n"); /* return TO; */}
-\.                          {printf("token: PERIOD\n"); /* return PERIOD; */}
 \n				            {/* ignore newlines */}
 [\t ]+                      {/* ignore whitespace */}
-";"                         {printf("token: SEMICOLON\n"); /* return SEMICOLON; */}
 [X]+                        {printf("token: SIZESTRING length is %d\n", yyleng); /* return SIZESTRING; */}
 [-+]?[0-9]+			        {printf("token: INTEGER value is %d\n", atoi(yytext)); /* return INTEGER; */}
 \"([^\\\"]|\\.)*\"          {printf("token: STRING\n"); /* return STRING; */}
 [a-zA-Z][a-zA-Z0-9\-]*	    {printf("token: IDENTIFIER\n"); /* return IDENTIFIER; */}
+";"                         {printf("token: SEMICOLON\n"); /* return SEMICOLON; */}
+\.                          {printf("token: PERIOD\n"); /* return PERIOD; */}
 .                           {printf("Invalid token\n"); return 0;}
 %%
 

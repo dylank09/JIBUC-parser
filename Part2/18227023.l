@@ -2,9 +2,13 @@
 %{
     #include "18227023.tab.h"
     #include <stdio.h>
+    #include <ctype.h>
+	#include <string.h>
 %}
 
+%option noyywrap
 %option caseless
+%option yylineno
 
 /* Rules */
 %%
@@ -16,15 +20,13 @@
 "ADD"                       {return ADD;}
 "END"			            {return END;}
 "TO"                        {return TO;}
-\.                          {return PERIOD;}
-\n				            {return NEWLINE;}
-[\t ]+                      {return WHITESPACE;}
-";"                         {return SEMICOLON;}
-[X]+                        {yyval = yyleng; return SIZESTRING;}
-[-+]?[0-9]+			        {yyval = atoi(yytext); return INTEGER;}
+\n  			            {/* ignore newlines */}
+[\t ]+                      {/* ignore whitespace */}
+[X]+                        {yylval.ival = yyleng; return SIZESTRING;}
+[-+]?[0-9]+			        {yylval.ival = atoi(yytext); return INTEGER;}
 \"([^\\\"]|\\.)*\"          {return STRING;}
-[a-zA-Z][a-zA-Z0-9\-]*	    {return IDENTIFIER;}
+[a-zA-Z][a-zA-Z0-9\-]*	    {yylval.string = yytext; return IDENTIFIER;}
+";"                         {return SEMICOLON;}
+\.                          {return PERIOD;}
 .                           {return INVALID;}
 %%
-
-/* Functions */
