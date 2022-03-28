@@ -1,3 +1,8 @@
 .vscode
 *.c
 *.exe
+*.tab
+*.tab.o
+*.tab.h
+*.tab.c
+*.o
