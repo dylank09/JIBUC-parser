@@ -48,7 +48,7 @@
 program: BEGINNING PERIOD 
 		 declarations 
 		 BODY PERIOD statements 
-		 END PERIOD {printf("This is a correctly formed program!\n");}
+		 END PERIOD {printf("This is a well formed program!\n");}
 
 declarations: declaration {}
 			| declaration declarations {}
