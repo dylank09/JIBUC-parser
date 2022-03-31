@@ -1,6 +1,6 @@
 /* Declarations */
 %{
-    #include "18227023.tab.h"
+    #include "bison.tab.h"
     #include <stdio.h>
     #include <ctype.h>
 	#include <string.h>
