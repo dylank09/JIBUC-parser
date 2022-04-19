@@ -13,4 +13,5 @@ Computer Systems 4th year project for module Programming Language Technology
 3. Run `gcc -c lex.yy.c bison.tab.c`
 4. Run `gcc -o parser lex.yy.o bison.tab.o`
 5. (a) Run `parser` to input language instance on the command line to check if its a well formed language instance
-   (b) Run `parser < test.txt` where test.txt contains a language instance
+
+(b) Run `parser < test.txt` where test.txt contains a language instance
