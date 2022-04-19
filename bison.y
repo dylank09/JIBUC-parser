@@ -27,15 +27,15 @@
 	#define MAX_STORAGE 250
 	char identifiers[MAX_STORAGE][30]; //max characters
 	int sizes[MAX_STORAGE];
-
 	int current_index = 0;
 %}
 
-%union {              /* define stack type */
+%union {  /* define stack type */
   int ival;
   char *string;
 }
 
+/* Declare tokens */
 %token BEGINNING BODY END
 %token INPUT OUTPUT MOVE ADD TO
 %token SEMICOLON PERIOD INVALID
@@ -44,6 +44,7 @@
 %token<ival> INTEGER
 %token<ival> SIZESTRING
 
+/* Defining rules */
 %%
 program: BEGINNING PERIOD 
 		 declarations 
@@ -86,7 +87,7 @@ output_exp: STRING SEMICOLON output_exp {}
 %%
 
 int main(int argc, char **argv){	
-	if (argc > 1) {
+	if (argc > 1) { /* if more then one argument: open file for reading, otherwise use stdin */
 		yyin = fopen(argv[1], "r");
 	}
 	else {
@@ -97,13 +98,16 @@ int main(int argc, char **argv){
 	return 0;
 }
 
+/* Function to compare sizes (of identifiers) */
 void check_size(int size1, int size2) {
 
-	if(size1 > size2) {
+	if(size1 > size2) { /* if the size of var1 is bigger than var2 then exit parsing */
 		exit_with_error("Value does not fit in identifier");
 	}
+	/* if the function runs without error we can continue */
 }
 
+/* Function to find the identifier in the array and return its size. If not found by end of array we quit */
 int get_size(char *identifier) {
 	format_identifier(identifier);
 
@@ -119,17 +123,20 @@ int get_size(char *identifier) {
 	exit_with_error("Identifier does not exist.");
 }
 
+/* Function that gets the number of digits in a number e.g. 1000: 4, 999: 3*/
 int get_int_size(int value) {
 	int nDigits = floor(log10(abs(value))) + 1;
 	return nDigits;
 }
 
+/* Function that exits if identifier doesnt exist */
 void find(char *identifier) {
 	if(!does_exist(identifier)) {
 		exit_with_error("Identifier does not exist.");
 	}
 }
 
+/* Function that trys to find identifier, returns true if found*/
 bool does_exist(char *identifier) {
 	format_identifier(identifier);
 
@@ -138,13 +145,14 @@ bool does_exist(char *identifier) {
 	int len = sizeof(identifiers)/sizeof(identifiers[0]);
 
 	for(i = 0; i < len; ++i) {
-		if(strcmp(identifiers[i], identifier) == 0) {
+		if(strcmp(identifiers[i], identifier) == 0) { /* standard library function to compare strings*/
 			return true;
 		}
 	}
 	return false;
 }
 
+/* Fixes up identifier by removing incorrect characters e.g. '.', ';' */
 void format_identifier(char *identifier) {
 	int i;
 
@@ -156,6 +164,7 @@ void format_identifier(char *identifier) {
 	} 
 }
 
+/* Checks if identifier exists already and adds it and its size to array */
 void add_identifier(int sizestring, char *identifier) {
 	format_identifier(identifier);
 
@@ -166,8 +175,6 @@ void add_identifier(int sizestring, char *identifier) {
 	strcpy(identifiers[current_index], identifier);
 	sizes[current_index] = sizestring;
 	current_index++;
-	
-	/* printf("Adding Identifier: %s  with size %d\n", identifier, sizestring); */
 }
 
 void yyerror(const char *error) {
